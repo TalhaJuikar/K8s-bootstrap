@@ -1,0 +1,6 @@
+---
+- name: Install kubernetes
+  hosts: all
+  become: true
+  roles:
+    - TalhaJuikar.kubernetes
