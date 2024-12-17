@@ -23,9 +23,9 @@ resource "google_compute_instance" "k8_master" {
   }
 
   metadata = {
-    ssh-keys = "var.ssh_public_key"
+    ssh-keys = join("\n", [for key in var.ssh_public_keys : "${var.ssh_user}:${key}"])
   }
-   tags = ["k8s"] 
+  tags = ["k8s"] 
 }
 
 # VM for Kubernetes Worker Node 1
@@ -49,7 +49,7 @@ resource "google_compute_instance" "k8_worker1" {
   }
 
   metadata = {
-    ssh-keys = "var.ssh_public_key"
+    ssh-keys = join("\n", [for key in var.ssh_public_keys : "${var.ssh_user}:${key}"])
   }
   tags = ["k8s"] 
 }
@@ -75,7 +75,7 @@ resource "google_compute_instance" "k8_worker2" {
   }
 
   metadata = {
-    ssh-keys = "var.ssh_public_key"
+    ssh-keys = join("\n", [for key in var.ssh_public_keys : "${var.ssh_user}:${key}"])
   }
   tags = ["k8s"] 
 }
@@ -89,4 +89,9 @@ output "k8_worker_ips" {
     google_compute_instance.k8_worker1.network_interface[0].access_config[0].nat_ip,
     google_compute_instance.k8_worker2.network_interface[0].access_config[0].nat_ip
   ]
+}
+
+output "ssh_user" {
+  value = var.ssh_user
+  
 }

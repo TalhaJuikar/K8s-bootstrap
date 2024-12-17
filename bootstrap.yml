@@ -4,3 +4,6 @@
   become: true
   roles:
     - TalhaJuikar.kubernetes
+  vars:
+    kubernetes_version: "1.31"
+    crio_version: "1.31"

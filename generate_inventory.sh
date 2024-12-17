@@ -8,6 +8,7 @@ fi
 
 MASTER_IP=$(terraform output -raw k8_master_ip)
 WORKER_IPS=$(terraform output -json k8_worker_ips | jq -r '.[]')
+SSH_USER=$(terraform output -raw ssh_user)
 
 cat <<EOF > inventory.ini
 [k8s_master]
@@ -25,6 +26,7 @@ cat <<EOF >> inventory.ini
 [all:vars]
 ansible_ssh_private_key_file=$SSH_KEY_PATH
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_user=$SSH_USER
 EOF
 
 echo "Inventory file generated successfully"

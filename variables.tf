@@ -34,7 +34,12 @@ variable "disk_size" {
   default = 100
 }
 
-variable "ssh_public_key" {
+variable "ssh_public_keys" {
   description = "The SSH public key to access the instances"
+  type        = list(string)
+}
+
+variable "ssh_user" {
+  description = "The SSH user to access the instances"
   type        = string
 }
